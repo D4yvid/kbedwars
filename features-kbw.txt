@@ -1,0 +1,39 @@
+1. Leaderboard system With Lifetime (yearly, monthly, weekly (optional))
+2. Party system
+3. Status in the NPC (like hypixel)
+4. Custom Items
+5. Upgrades & Traps system
+5.1. Ender Pearls
+5.2. Fireballs
+5.3. Iron Golems
+5.4. Bridge Egg
+5.5. Potions (all with 40s of duration)
+5.5.1. Jump Boost
+5.5.2. Speed
+5.5.3. Invisibility
+6. Bug fix on quitting the server while playing bedwars, the plugin try to teleport player that left the game
+7. Add a command that can change stats and also updates in leaderboard
+8. Shop with layout choices:
+8.1. Desktop Layout:
+8.1.1:
+	|  |  |  |  |  |  |  |  |  |
+	|  |IT|IT|IT|IT|IT|IT|IT|  |
+	|  |IT|IT|IT|IT|IT|IT|IT|  |
+	|  |IT|IT|IT|IT|IT|IT|IT|  |
+	|  |  |  |  |  |  |  |  |  |
+	|XX|XX|XX|XX|XX|XX|XX|XX|XX|
+	|  |C1|C2|C3|C4|C5|C6|C7|  |
+
+	[IT] Item
+	[XX] Glass Pane
+	[Cn] Category n
+
+8.2. Mobile Layout:
+8.2.1:
+	|IT|IT|IT|IT|IT|IT|IT|IT|IT|
+	|IT|IT|IT|IT|IT|IT|IT|IT|IT|
+	|  |  |  |  |  |  |  |  |RT|
+
+	[RT] Return
+	[IT] Item/Category
+	
