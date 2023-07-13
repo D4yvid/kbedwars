@@ -4,6 +4,7 @@ namespace dev\d4y\kbedwars\database\provider;
 
 use dev\d4y\kbedwars\database\DatabaseProvider;
 use Exception;
+use InvalidStateException;
 use mysqli;
 use RuntimeException;
 
@@ -54,23 +55,53 @@ class MySQLProvider implements DatabaseProvider
                 $port
             );
         } catch (Exception $exception) {
+            $this->valid = false;
+
             throw new RuntimeException("Could not connect to the database: ", $exception);
         }
+
+        $this->connected = true;
+        $this->valid = true;
+
+        return true;
     }
 
     function query(string $query, array $parameters)
     {
-        // TODO: Implement query() method.
+        $stmt = $this->getMySQLHandle()->prepare($query);
+
+        foreach ($parameters as $key => $value) {
+            $stmt->bind_param($this->convertType($value['Type']), $value['Value']);
+        }
+
+        if (!$stmt->execute())
+        {
+            return null;
+        }
+
+        return $stmt->get_result();
     }
 
-    function execute(string $query, array $parameters)
+    function execute(string $query, array $parameters): bool
     {
-        // TODO: Implement execute() method.
+        $stmt = $this->getMySQLHandle()->prepare($query);
+
+        foreach ($parameters as $value) {
+            $stmt->bind_param($this->convertType($value['Type']), $value['Value']);
+        }
+
+        if (!$stmt->execute())
+            return false;
+
+        return true;
     }
 
     function close(): bool
     {
-        // TODO: Implement close() method.
+        if (!$this->valid)
+            return false;
+
+        return $this->getMySQLHandle()->close();
     }
 
     /**
@@ -113,4 +144,20 @@ class MySQLProvider implements DatabaseProvider
         return $this->mysqlHandle;
     }
 
+    function convertType(int $type): string
+    {
+        switch ($type)
+        {
+        case self::DATABASE_TYPE_STRING:
+            return 's';
+        case self::DATABASE_TYPE_NUMBER:
+            return 'i';
+        case self::DATABASE_TYPE_FLOAT:
+            return 'f';
+        case self::DATABASE_TYPE_BLOB:
+            return 'b';
+        default:
+            throw new InvalidStateException();
+        }
+    }
 }

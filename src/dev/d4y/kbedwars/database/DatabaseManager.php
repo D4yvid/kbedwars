@@ -2,6 +2,7 @@
 
 namespace dev\d4y\kbedwars\database;
 
+use dev\d4y\kbedwars\database\provider\MySQLProvider;
 use dev\d4y\kbedwars\database\provider\SQLiteProvider;
 use dev\d4y\kbedwars\Entry;
 use dev\d4y\kbedwars\helper\Log;
@@ -81,7 +82,7 @@ class DatabaseManager
                 $hostname = "127.0.0.1";
             }
 
-            $provider = new MySQLProvider();
+            $provider = new MySQLProvider($database, $user, $password);
             $provider->connect($hostname, $port);
 
             break;
