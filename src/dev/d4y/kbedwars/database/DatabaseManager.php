@@ -79,6 +79,9 @@ class DatabaseManager
 
     public function close()
     {
+        if (!$this->valid)
+            return Log::warn("Tried to close a invalid instance of DatabaseManager");
+
         $this->getCurrentProvider()->close();
     }
 

@@ -3,9 +3,9 @@
 namespace dev\d4y\kbedwars;
 
 use dev\d4y\kbedwars\database\DatabaseManager;
-use dev\d4y\kbedwars\helper\PathHelper;
-use http\Exception\RuntimeException;
+use dev\d4y\kbedwars\helper\Log;
 use pocketmine\plugin\PluginBase;
+use RuntimeException;
 
 class Entry extends PluginBase
 {
@@ -62,11 +62,11 @@ class Entry extends PluginBase
         }
 
         self::$instance = $this;
+        Log::init($this);
     }
 
     public function onLoad()
     {
-        assert(self::get() != NULL);
         @mkdir($this->getDataFolder());
 
         $this->configuration = new Configuration($this);
