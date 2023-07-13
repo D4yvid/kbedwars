@@ -37,9 +37,20 @@ class Configuration
             $plugin,
             PathHelper::mount($plugin->getDataFolder(), "config.yml"),
             [
-                "Database.Provider" => "mysql"
+                "Database.Provider" => "sqlite",
+                "Database.MySQL.Port" => 3306,
+                "Database.MySQL.Host" => "127.0.0.1",
+                "Database.MySQL.User" => "",
+                "Database.MySQL.Password" => "",
+                "Database.MySQL.DatabaseName" => "kbedwars-database"
             ]
         );
+    }
+
+    public function destroy()
+    {
+        $this->yamlProvider->save();
+        $this->yamlProvider = NULL;
     }
 
     public function getDatabaseProvider(): string
@@ -47,10 +58,29 @@ class Configuration
         return $this->yamlProvider->get("Database.Provider", "sqlite");
     }
 
-    public function destroy()
+    public function getDatabasePort(): int
     {
-        $this->yamlProvider->save();
-        $this->yamlProvider = NULL;
+        return $this->yamlProvider->get("Database.MySQL.Port", 3306);
+    }
+
+    public function getDatabaseHost(): string
+    {
+        return $this->yamlProvider->get("Database.MySQL.Host");
+    }
+
+    public function getDatabasePassword(): string
+    {
+        return $this->yamlProvider->get("Database.MySQL.Password");
+    }
+
+    public function getDatabaseUser(): string
+    {
+        return $this->yamlProvider->get("Database.MySQL.User");
+    }
+
+    public function getDatabaseName(): string
+    {
+        return $this->yamlProvider->get("Database.MySQL.DatabaseName", null);
     }
 
 }

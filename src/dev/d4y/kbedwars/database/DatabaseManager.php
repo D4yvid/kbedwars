@@ -68,6 +68,23 @@ class DatabaseManager
 
             $provider = new SQLiteProvider($filePath);
             break;
+        case DatabaseProvider::MYSQL:
+            $hostname = $this->getPlugin()->getConfiguration()->getDatabaseHost();
+            $port = $this->getPlugin()->getConfiguration()->getDatabasePort() ?? 3306;
+            $user = $this->getPlugin()->getConfiguration()->getDatabaseUser();
+            $password = $this->getPlugin()->getConfiguration()->getDatabasePassword();
+            $database = $this->getPlugin()->getConfiguration()->getDatabaseName();
+
+            if (!$hostname) {
+                Log::warn("There is no valid hostname configured, using 127.0.0.1 instead.");
+
+                $hostname = "127.0.0.1";
+            }
+
+            $provider = new MySQLProvider();
+            $provider->connect($hostname, $port);
+
+            break;
         default:
             Log::error("A invalid database provider was set in the configuration file");
 
@@ -80,7 +97,10 @@ class DatabaseManager
     public function close()
     {
         if (!$this->valid)
-            return Log::warn("Tried to close a invalid instance of DatabaseManager");
+        {
+            Log::warn("Tried to close a invalid instance of DatabaseManager");
+            return;
+        }
 
         $this->getCurrentProvider()->close();
     }

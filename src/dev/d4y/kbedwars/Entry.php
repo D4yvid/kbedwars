@@ -51,17 +51,8 @@ class Entry extends PluginBase
         return $this->configuration;
     }
 
-    /** @var self */
-    private static $instance;
-
     public function __construct()
     {
-        if (self::$instance != NULL)
-        {
-            throw new RuntimeException("There is already a instance of " . get_class() . " created");
-        }
-
-        self::$instance = $this;
         Log::init($this);
     }
 
@@ -81,11 +72,6 @@ class Entry extends PluginBase
     {
         $this->getConfiguration()->destroy();
         $this->getDatabaseManager()->close();
-    }
-
-    public static function get(): self
-    {
-        return self::$instance;
     }
 
 }
