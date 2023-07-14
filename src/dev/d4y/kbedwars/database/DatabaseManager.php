@@ -8,7 +8,6 @@ use dev\d4y\kbedwars\Entry;
 use dev\d4y\kbedwars\helper\Log;
 use dev\d4y\kbedwars\helper\PathHelper;
 use Exception;
-use InvalidArgumentException;
 
 class DatabaseManager
 {
@@ -43,14 +42,14 @@ class DatabaseManager
     public function __construct(Entry $plugin)
     {
         $this->plugin = $plugin;
+        $this->valid = false;
+
         $provider = $this->getDatabaseProvider($plugin);
 
         if (!$provider)
-        {
-            $this->valid = false;
-
             throw new Exception("There is no database provider available");
-        }
+
+        Log::info("Using the database provider %s", get_class($provider));
 
         $this->valid = true;
         $this->currentProvider = $provider;
@@ -71,8 +70,8 @@ class DatabaseManager
             break;
         case DatabaseProvider::MYSQL:
             $hostname = $this->getPlugin()->getConfiguration()->getDatabaseHost();
-            $port = $this->getPlugin()->getConfiguration()->getDatabasePort() ?? 3306;
-            $user = $this->getPlugin()->getConfiguration()->getDatabaseUser();
+            $port     = $this->getPlugin()->getConfiguration()->getDatabasePort() ?? 3306;
+            $user     = $this->getPlugin()->getConfiguration()->getDatabaseUser();
             $password = $this->getPlugin()->getConfiguration()->getDatabasePassword();
             $database = $this->getPlugin()->getConfiguration()->getDatabaseName();
 
@@ -100,7 +99,7 @@ class DatabaseManager
         if (!$this->valid)
         {
             Log::warn("Tried to close a invalid instance of DatabaseManager");
-            return;
+            return false;
         }
 
         $this->getCurrentProvider()->close();

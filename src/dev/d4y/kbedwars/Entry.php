@@ -4,6 +4,7 @@ namespace dev\d4y\kbedwars;
 
 use dev\d4y\kbedwars\database\DatabaseManager;
 use dev\d4y\kbedwars\helper\Log;
+use Exception;
 use pocketmine\plugin\PluginBase;
 use RuntimeException;
 
@@ -56,6 +57,9 @@ class Entry extends PluginBase
         Log::init($this);
     }
 
+    /**
+     * @throws Exception
+     */
     public function onLoad()
     {
         @mkdir($this->getDataFolder());
@@ -66,6 +70,9 @@ class Entry extends PluginBase
 
     public function onEnable()
     {
+        $this->getDatabaseManager()
+             ->getCurrentProvider()
+             ->execute("CREATE TABLE Users(name TEXT, id INTEGER AUTO_INCREMENT PRIMARY KEY)", []);
     }
 
     public function onDisable()
