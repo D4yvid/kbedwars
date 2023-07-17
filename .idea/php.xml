@@ -15,8 +15,11 @@
       <path value="$PROJECT_DIR$/../VirtualNPCs v1.0.0" />
       <path value="$PROJECT_DIR$/../VirtualInventories v1.0.0" />
       <path value="$PROJECT_DIR$/../VirtualDatabase v1.0.0" />
-      <path value="$PROJECT_DIR$/../PocketMine" />
+      <path value="$PROJECT_DIR$/../../../PocketMine" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.0" />
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
 </project>
