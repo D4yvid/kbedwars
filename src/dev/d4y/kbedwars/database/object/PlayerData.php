@@ -3,6 +3,7 @@
 namespace dev\d4y\kbedwars\database\object;
 
 use pocketmine\utils\BinaryStream;
+use pocketmine\utils\UUID;
 
 class PlayerData
 {
@@ -47,6 +48,8 @@ class PlayerData
     public static function fromHash(string $hash) {
         $stream = new BinaryStream($hash);
 
+        
+
         return new PlayerData();
     }
 
@@ -76,6 +79,18 @@ class PlayerData
 
     private function hashIt()
     {
+        $stream = new BinaryStream();
+
+        $stream->putUUID(UUID::fromString($this->uuid));
+        $stream->putLInt($this->wins);
+        $stream->putInt($this->kills);
+        $stream->putLInt($this->finalKills);
+        $stream->putInt($this->bedsBroken);
+        $stream->putLInt($this->winStreak);
+        $stream->putInt($this->level);
+        $stream->putLInt($this->exp);
+        $stream->putInt($this->coins);
+
         return "";
     }
 

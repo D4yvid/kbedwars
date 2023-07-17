@@ -4,9 +4,7 @@ namespace dev\d4y\kbedwars;
 
 use dev\d4y\kbedwars\database\DatabaseManager;
 use dev\d4y\kbedwars\helper\Log;
-use Exception;
 use pocketmine\plugin\PluginBase;
-use RuntimeException;
 
 class Entry extends PluginBase
 {
