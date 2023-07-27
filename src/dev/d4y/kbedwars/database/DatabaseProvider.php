@@ -16,7 +16,7 @@ interface DatabaseProvider
     function connect(string $address, int $port): bool;
 
     function query(string $query, array $parameters);
-    function execute(string $query, array $parameters);
+    function execute(string $query, array $parameters = []);
 
     function close(): bool;
 

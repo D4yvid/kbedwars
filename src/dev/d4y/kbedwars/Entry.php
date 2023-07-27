@@ -2,14 +2,20 @@
 
 namespace dev\d4y\kbedwars;
 
+use dev\d4y\kbedwars\arena\ArenaManager;
 use dev\d4y\kbedwars\database\DatabaseManager;
+use dev\d4y\kbedwars\game\GameManager;
 use dev\d4y\kbedwars\helper\Log;
+use Exception;
 use pocketmine\plugin\PluginBase;
 
 class Entry extends PluginBase
 {
 
+    /** @var GameManager */
     private $gameManager;
+
+    /** @var ArenaManager */
     private $arenaManager;
 
     /** @var DatabaseManager */
@@ -19,17 +25,17 @@ class Entry extends PluginBase
     private $configuration;
 
     /**
-     * @return mixed
+     * @return GameManager
      */
-    public function getGameManager()
+    public function getGameManager(): GameManager
     {
         return $this->gameManager;
     }
 
     /**
-     * @return mixed
+     * @return ArenaManager
      */
-    public function getArenaManager()
+    public function getArenaManager(): ArenaManager
     {
         return $this->arenaManager;
     }
@@ -64,13 +70,16 @@ class Entry extends PluginBase
 
         $this->configuration = new Configuration($this);
         $this->databaseManager = new DatabaseManager($this);
+        $this->arenaManager = new ArenaManager($this);
+
+        $this->gameManager = new GameManager($this);
     }
 
     public function onEnable()
     {
-        $this->getDatabaseManager()
-             ->getCurrentProvider()
-             ->execute("CREATE TABLE Users(name TEXT, id INTEGER AUTO_INCREMENT PRIMARY KEY)", []);
+        $this->getDatabaseManager()->init();
+
+        $this->getServer()->getPluginManager()->registerEvents(new TestListener($this), $this);
     }
 
     public function onDisable()

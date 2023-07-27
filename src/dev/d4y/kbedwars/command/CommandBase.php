@@ -108,8 +108,8 @@ abstract class CommandBase implements CommandExecutor
 		$this->execute($sender, $args);
 	}
 
-	public function getCommandSlashString()
-	{
+	public function getCommandSlashString(): string
+    {
 		$data = $this->getName();
 
 		return "/$data";

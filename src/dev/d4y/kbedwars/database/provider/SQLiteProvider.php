@@ -49,7 +49,7 @@ class SQLiteProvider implements DatabaseProvider
         return $stmt->execute();
     }
 
-    function execute(string $query, array $parameters)
+    function execute(string $query, array $parameters = [])
     {
         $stmt = $this->sqlHandle->prepare($query);
 

@@ -16,13 +16,13 @@
 [ ] 8. Shop with layout choices:
 [ ] 8.1. Desktop Layout:
 [ ] 8.1.1:
-	|  |  |  |  |  |  |  |  |  |
-	|  |IT|IT|IT|IT|IT|IT|IT|  |
-	|  |IT|IT|IT|IT|IT|IT|IT|  |
-	|  |IT|IT|IT|IT|IT|IT|IT|  |
-	|  |  |  |  |  |  |  |  |  |
-	|XX|XX|XX|XX|XX|XX|XX|XX|XX|
-	|  |C1|C2|C3|C4|C5|C6|C7|  |
+	|  |XX|  |  |  |  |  |  |  |
+	|C1|XX|  |IT|IT|IT|IT|IT|  |
+	|C2|XX|  |IT|IT|IT|IT|IT|  |
+	|C3|XX|  |IT|IT|IT|IT|IT|  |
+	|C4|XX|  |IT|IT|IT|IT|IT|  |
+	|C5|XX|  |IT|IT|IT|IT|IT|  |
+	|  |XX|  |  |  |  |  |  |  |
 
 	[IT] Item
 	[XX] Glass Pane
@@ -36,4 +36,5 @@
 
 	[RT] Return
 	[IT] Item/Category
-	
+
+[ ] 9. Custom Kill, Death & Bed Break animations

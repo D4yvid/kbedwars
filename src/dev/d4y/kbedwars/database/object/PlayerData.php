@@ -13,6 +13,7 @@ class PlayerData
 
     private $uuid;
     private $wins;
+	private $gamesPlayed;
     private $kills;
     private $finalKills;
     private $bedsBroken;
@@ -24,6 +25,7 @@ class PlayerData
     private function __construct(
         string $uuid,
         int $wins,
+		int $gamesPlayed,
         int $kills,
         int $finalKills,
         int $bedsBroken,
@@ -34,6 +36,7 @@ class PlayerData
     ) {
         $this->uuid = $uuid;
         $this->wins = $wins;
+		$this->gamesPlayed = $gamesPlayed;
         $this->kills = $kills;
         $this->finalKills = $finalKills;
         $this->bedsBroken = $bedsBroken;
@@ -48,14 +51,40 @@ class PlayerData
     public static function fromHash(string $hash) {
         $stream = new BinaryStream($hash);
 
-        
+		$uuid = $stream->getUUID()->toString();
 
-        return new PlayerData();
+		$wins = $stream->getLLong();
+		$gamesPlayed = $stream->getLLong();
+
+		$kills = $stream->getLLong();
+		$finalKills = $stream->getLLong();
+
+		$bedsBroken = $stream->getLLong();
+		$winStreak = $stream->getLShort(false);
+
+		$level = $stream->getLLong();
+		$exp = $stream->getLInt();
+
+		$coins = $stream->getLLong();
+
+		return new PlayerData(
+			$uuid,
+			$wins,
+			$gamesPlayed,
+			$kills,
+			$finalKills,
+			$bedsBroken,
+			$winStreak,
+			$level,
+			$exp,
+			$coins
+		);
     }
 
     public static function fromData(
         string $uuid,
         int $wins,
+		int $gamesPlayed,
         int $kills,
         int $finalKills,
         int $bedsBroken,
@@ -67,6 +96,7 @@ class PlayerData
         return new PlayerData(
             $uuid,
             $wins,
+			$gamesPlayed,
             $kills,
             $finalKills,
             $bedsBroken,

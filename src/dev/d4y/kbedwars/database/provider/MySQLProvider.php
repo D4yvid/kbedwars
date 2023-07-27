@@ -4,7 +4,7 @@ namespace dev\d4y\kbedwars\database\provider;
 
 use dev\d4y\kbedwars\database\DatabaseProvider;
 use Exception;
-use InvalidStateException;
+use InvalidArgumentException;
 use mysqli;
 use RuntimeException;
 
@@ -57,7 +57,7 @@ class MySQLProvider implements DatabaseProvider
         } catch (Exception $exception) {
             $this->valid = false;
 
-            throw new RuntimeException("Could not connect to the database: ", $exception);
+            throw new RuntimeException("Could not connect to the database: ", 1, $exception);
         }
 
         $this->connected = true;
@@ -70,7 +70,7 @@ class MySQLProvider implements DatabaseProvider
     {
         $stmt = $this->getMySQLHandle()->prepare($query);
 
-        foreach ($parameters as $key => $value) {
+        foreach ($parameters as $value) {
             $stmt->bind_param($this->convertType($value['Type']), $value['Value']);
         }
 
@@ -82,7 +82,7 @@ class MySQLProvider implements DatabaseProvider
         return $stmt->get_result();
     }
 
-    function execute(string $query, array $parameters): bool
+    function execute(string $query, array $parameters = []): bool
     {
         $stmt = $this->getMySQLHandle()->prepare($query);
 
@@ -157,7 +157,7 @@ class MySQLProvider implements DatabaseProvider
         case self::DATABASE_TYPE_BLOB:
             return 'b';
         default:
-            throw new InvalidStateException();
+            throw new InvalidArgumentException();
         }
     }
 }

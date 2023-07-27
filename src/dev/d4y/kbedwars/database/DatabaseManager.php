@@ -105,4 +105,23 @@ class DatabaseManager
         $this->getCurrentProvider()->close();
     }
 
+    public function init()
+    {
+        $this->getCurrentProvider()->execute('
+            CREATE TABLE IF NOT EXISTS PlayerData(
+                hash            TEXT NOT NULL,
+                uuid            TEXT NOT NULL,
+                wins            INT NOT NULL,
+                gamesPlayed     INT NOT NULL,
+                kills           INT NOT NULL,
+                finalKills      INT NOT NULL,
+                bedsBroken      INT NOT NULL,
+                winStreak       INT NOT NULL,
+                level           INT NOT NULL,
+                exp             INT NOT NULL,
+                coins           INT NOT NULL
+            )
+        ');
+    }
+
 }
